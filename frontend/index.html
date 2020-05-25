@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Travel log</title>
+  <link rel="icon" type="image/png" href="static/icons/roicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+	<script src="static/lib.js"></script>
+	<link href="static/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<h2 class="title"> Romania Travel Log </h2>
+
+
+	<div class="containerForm contact">
+		<form method="post" id="collectDataForm" onsubmit="return processForm(event)">
+
+    		<label for="firstName">First Name</label>
+    		<input type="text" id="firstName" name="firstName" placeholder="Your first name">
+        <br />
+
+    		<label for="lastName">Last Name</label>
+    		<input type="text" id="lastName" name="lastName" placeholder="Your last name">
+        <br />
+
+    		<label for="story">Story</label>
+    		<textarea type="text" rows="10" cols="30" id="story" name="story" placeholder="Your story goes here" >
+				</textarea>
+        <br />
+
+    		<label for="city">City</label>
+    		<select id="city" name="city">
+      			<option value="bucharest">Bucharest</option>
+      			<option value="cluj">Cluj</option>
+      			<option value="timisoara">Timisoara</option>
+      			<option value="brasov">Brasov</option>
+      			<option value="constanta">Constanta</option>
+      			<option value="valcea">Ramnicu Valcea</option>
+    		</select>
+        <br />
+
+    		<button>Send</button>
+  		</form>
+	</div>
+
+  <br />
+	<div class="container_controllers">
+		<button onclick="return getVisitors()">Get Visitors</button>
+		<button onclick="return getStories()">Get Stories</button>
+		<br />
+
+		<div class="selector">
+			<label for="city">Get stories from cities</label>
+			<select class = "form" id="city" name="city" onchange="getStoriesByCity()">
+				<option value="bucharest">Bucharest</option>
+				<option value="cluj">Cluj</option>
+				<option value="timisoara">Timisoara</option>
+				<option value="brasov">Brasov</option>
+				<option value="constanta">Constanta</option>
+				<option value="valcea">Ramnicu Valcea</option>
+			</select>
+		</div>
+
+	</div>
+
+  <br /><br />
+	<div class="container_items">
+		<table id="itemsList">
+			<tr>
+    			<th>First Name</th>
+    			<th>Last Name</th>
+          		<th>City</th>
+  			</tr>
+
+		</table>
+	</div>
+
+	<br/>
+
+	
+  	<div class="container_items">
+  		<table id="storyList">
+  			<tr>
+      			<th>City</th>
+      			<th>Story</th>
+    		</tr>
+		</table>
+  	</div>
+
+
+
+	<div id="details" class="details">
+	   <a class="btn_social"><i class="fas fa-phone"></i></a>
+	   <a class="btn_social"><i class="fas fa-at"></i></a>
+	   <a class="btn_social"><i class="fab fa-twitter"></i></a>
+	   <a class="btn_social"><i class="fab fa-dribbble"></i></a>
+	</div>
+
+	<div id="footerindex" class="footer">
+        Designed for 4PSA <br><br>
+    </div>
+
+</body>
+</html>
