@@ -26,8 +26,7 @@
         <br />
 
     		<label for="story">Story</label>
-    		<textarea type="text" rows="10" cols="30" id="story" name="story" placeholder="Your story goes here" >
-				</textarea>
+    		<textarea rows="10" cols="30" id="story" name="story" placeholder="Your story goes here.."></textarea>
         <br />
 
     		<label for="city">City</label>
@@ -49,11 +48,11 @@
 	<div class="container_controllers">
 		<button onclick="return getVisitors()">Get Visitors</button>
 		<button onclick="return getStories()">Get Stories</button>
-		<br />
+	 <br />
 
-		<div class="selector">
-			<label for="city">Get stories from cities</label>
-			<select class = "form" id="city" name="city" onchange="getStoriesByCity()">
+	<div class="selector">
+		<label for="city">Get stories from cities</label>
+			<select class = "form" id="get_city" name="city" onchange="getStoriesByCity()">
 				<option value="bucharest">Bucharest</option>
 				<option value="cluj">Cluj</option>
 				<option value="timisoara">Timisoara</option>
@@ -67,27 +66,27 @@
 
   <br /><br />
 	<div class="container_items">
-		<table id="itemsList">
+		<table id="visitorsList">
 			<tr>
-    			<th>First Name</th>
-    			<th>Last Name</th>
-          		<th>City</th>
-  			</tr>
+  			<th>First Name</th>
+  			<th>Last Name</th>
+        <th>City</th>
+  		</tr>
 
 		</table>
 	</div>
 
 	<br/>
 
-	
-  	<div class="container_items">
-  		<table id="storyList">
-  			<tr>
-      			<th>City</th>
-      			<th>Story</th>
-    		</tr>
+
+  <div class="container_items">
+  	<table id="storyList">
+			<tr>
+    		<th>City</th>
+    		<th>Story</th>
+    	</tr>
 		</table>
-  	</div>
+  </div>
 
 
 
@@ -100,7 +99,7 @@
 
 	<div id="footerindex" class="footer">
         Designed for 4PSA <br><br>
-    </div>
+  </div>
 
 </body>
 </html>

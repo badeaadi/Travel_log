@@ -38,7 +38,7 @@ app.post(RESTAPIRoot + "/contact", function (request, response) {
 
     		// Generate a random ID for our new db entry
     		let newId = uuidv4();
-
+				console.log(newId);
     		// Append the new entry to the content
     		dbContentObj.documents.push({id: newId, data: request.body});
     		var dbContentJSON = JSON.stringify(dbContentObj);
@@ -65,14 +65,14 @@ app.post(RESTAPIRoot + "/contact", function (request, response) {
 })
 
 // GET route: /contact (used to get the items)
-app.get(RESTAPIRoot + "/contact", function(request, response) {
+app.get(RESTAPIRoot + "/contact" + "/visitors", function(request, response) {
 
 	/*
 	 * Log the incoming request for debugging
 	 * Because it's a GET we don't have a body but only query params
 	 * ex. query params like filters, pagination, etc.
 	 */
-  	console.log("Incoming GET contact/: ", request.query);
+  	console.log("Incoming GET contact visitors/: ", request.query);
 
   	// Simply return all the documents from db file
   	fs.readFile(jsonDBName, "utf8", function readFileCallback(err, data) {
@@ -93,19 +93,16 @@ app.get(RESTAPIRoot + "/contact", function(request, response) {
 	});
 });
 
-
-// GET route: /contact/<contactId> (used to get a single item)
-app.get(RESTAPIRoot + "/contact/:contactId", function(request, response) {
+app.get(RESTAPIRoot + "/contact" + "/stories", function(request, response) {
 
 	/*
 	 * Log the incoming request for debugging
-	 * In this case we are interested in a specific URI param - the contact Id
+	 * Because it's a GET we don't have a body but only query params
+	 * ex. query params like filters, pagination, etc.
 	 */
-  	console.log("Incoming GET contact/<contactId>: ", request.params);
+  	console.log("Incoming GET contact stories/: ", request.query);
 
-  	let findDocId = request.params.contactId;
-
-  	// Read the db file and try to find the document with the id=<contactId>
+  	// Simply return all the documents from db file
   	fs.readFile(jsonDBName, "utf8", function readFileCallback(err, data) {
     	if (err) {
     		// Could not open the db file
@@ -116,26 +113,49 @@ app.get(RESTAPIRoot + "/contact/:contactId", function(request, response) {
     		let dbContentObj = JSON.parse(data);
 
     		// Return the response to the client
+			response.setHeader("Content-Type", "application/json");
 
-    		for (let i=0; i < dbContentObj.documents.length ;i++) {
-    			if (dbContentObj.documents[i].id == findDocId) {
-    				// Stop the loop and simply return the document
-    				response.setHeader("Content-Type", "application/json");
-  					response.end(JSON.stringify(dbContentObj.documents[i]));
-  					return;
-    			}
-    		}
-
-    		// The document was not found, return a 404 HTTP Error
-    		let errorResponse = {
-    			code: "invalid_contact_id",
-    			message: "The id is invalid (custom app error)"
-    		};
-
-    		response.setHeader("Content-Type", "application/json");
-    		response.status(404);
-    		response.end(JSON.stringify(errorResponse));
+			// The content of db file is already a JSON string
+  			response.end(JSON.stringify(dbContentObj.documents));
 		}
+	});
+});
+
+app.get(RESTAPIRoot + "/contact" + "/stories" + "/city/:cityName", function(request, response) {
+	console.log("Incoming GET contact stories/<cityName>: ", request.params);
+
+	let findCityName = request.params.cityName;
+	// Read the db file and try to find the document with the id=<contactId>
+	fs.readFile(jsonDBName, "utf8", function readFileCallback(err, data) {
+		if (err) {
+			// Could not open the db file
+				console.log(err);
+		} else {
+
+			// Read the file content - it's a JSON string and it needs to be parsed
+			let dbContentObj = JSON.parse(data);
+
+			// Return the response to the client
+      // doesn t populate and todo : send more objects
+			for (let i=0; i < dbContentObj.documents.length ;i++) {
+				if (dbContentObj.documents[i].data.city == findCityName) {
+					// Stop the loop and simply return the document
+					response.setHeader("Content-Type", "application/json");
+					response.end(JSON.stringify(dbContentObj.documents[i]));
+					return;
+				}
+			}
+
+			// The document was not found, return a 404 HTTP Error
+			let errorResponse = {
+				code: "invalid_city_name",
+				message: "This city name is invalid (custom app error)"
+			};
+
+			response.setHeader("Content-Type", "application/json");
+			response.status(404);
+			response.end(JSON.stringify(errorResponse));
+	}
 	});
 
 });

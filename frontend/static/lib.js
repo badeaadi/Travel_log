@@ -48,9 +48,10 @@ function processForm(event) {
 	return false;
 }
 
-function getItems () {
+function getVisitors () {
 
-	let fullAPIPath = BaseAPIPath + ContactAPIPath + "?page=1&perPage=20";
+	let GetVis = "/visitors";
+	let fullAPIPath = BaseAPIPath + ContactAPIPath + GetVis + "?page=1&perPage=20";
 	let httpPromise = fetch(fullAPIPath, {
     	method: 'GET',
     	headers: {
@@ -65,7 +66,7 @@ function getItems () {
 
     	// handle the response from backend
     	response.json().then(data => {
-  			populateTable(data);
+  			populateVisitorsTable(data);
 		});
 
   		// show a simple alert
@@ -80,10 +81,81 @@ function getItems () {
 	return false;
 }
 
-function populateTable(documents) {
+function getStories () {
+
+	let GetStory = "/stories";
+	let fullAPIPath = BaseAPIPath + ContactAPIPath + GetStory + "?page=1&perPage=20";
+	let httpPromise = fetch(fullAPIPath, {
+    	method: 'GET',
+    	headers: {
+        	'Content-Type': 'application/json',
+        	'Accept': 'application/json'
+    	}
+	});
+
+    httpPromise.then(function(response) {
+    	// log the response from backend for debugging
+    	console.log(response);
+
+    	// handle the response from backend
+    	response.json().then(data => {
+  			populateStoriesTable(data);
+		});
+
+  		// show a simple alert
+  		if (response.ok) {
+  			// the status code is 200
+  			alert("Contacts successfully read!");
+  		} else {
+  			alert("Error: contact could not be created.");
+  		}
+    });
+
+	return false;
+}
+
+function getStoriesByCity () {
+
+	let cityOps = document.getElementById("get_city");
+	selCity = cityOps.options[cityOps.selectedIndex].value;
+
+	let GetStory = "/stories";
+	let GetCity = "/city/" + selCity;
+	let fullAPIPath = BaseAPIPath + ContactAPIPath + GetStory + GetCity;
+	let httpPromise = fetch(fullAPIPath, {
+    	method: 'GET',
+    	headers: {
+        	'Content-Type': 'application/json',
+        	'Accept': 'application/json'
+    	}
+	});
+
+    httpPromise.then(function(response) {
+    	// log the response from backend for debugging
+    	console.log(response);
+
+    	// handle the response from backend
+    	response.json().then(data => {
+  			populateStoriesTable(data);
+		});
+
+  		// show a simple alert
+  		if (response.ok) {
+  			// the status code is 200
+  			alert("Contacts successfully read!");
+  		} else {
+  			alert("Error: contact could not be created.");
+  		}
+    });
+
+	return false;
+}
+
+
+function populateVisitorsTable(documents) {
 	console.log(documents);
 
-	let itemsTable = document.getElementById('itemsList');
+	let itemsTable = document.getElementById('visitorsList');
 
 	for (let i=0; i < documents.length ;i++) {
 
@@ -91,13 +163,25 @@ function populateTable(documents) {
 		let item1 = newRow.insertCell(0);
 		let item2 = newRow.insertCell(1);
 		let item3 = newRow.insertCell(2);
-		let item4 = newRow.insertCell(3);
-		let item5 = newRow.insertCell(4);
 
 		item1.innerHTML = documents[i].data.firstName;
 		item2.innerHTML = documents[i].data.lastName;
-		item3.innerHTML = documents[i].data.email;
-		item4.innerHTML = documents[i].data.eyeColor;
-		item5.innerHTML = documents[i].id;
+		item3.innerHTML = documents[i].data.city;
+	}
+}
+
+function populateStoriesTable(documents) {
+	console.log(documents);
+
+	let itemsTable = document.getElementById('storyList');
+
+	for (let i=0; i < documents.length; i++) {
+
+		let newRow = itemsTable.insertRow(i+1);
+		let item1 = newRow.insertCell(0);
+		let item2 = newRow.insertCell(1);
+
+		item1.innerHTML = documents[i].data.city;
+		item2.innerHTML = documents[i].data.story;
 	}
 }

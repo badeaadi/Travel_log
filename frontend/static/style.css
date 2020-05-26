@@ -2,6 +2,9 @@ table, th, td {
   border: 1px solid white;
   padding: 10px;
 }
+table, label {
+  margin-left: 10px;
+}
 
 body,html {
     padding:0px;
