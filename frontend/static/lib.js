@@ -99,6 +99,7 @@ function getStories () {
 
     	// handle the response from backend
     	response.json().then(data => {
+				console.log(data);
   			populateStoriesTable(data);
 		});
 
@@ -176,8 +177,8 @@ function populateStoriesTable(documents) {
 	let itemsTable = document.getElementById('storyList');
 
 	for (let i=0; i < documents.length; i++) {
-
 		let newRow = itemsTable.insertRow(i+1);
+
 		let item1 = newRow.insertCell(0);
 		let item2 = newRow.insertCell(1);
 

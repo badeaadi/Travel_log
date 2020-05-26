@@ -134,16 +134,22 @@ app.get(RESTAPIRoot + "/contact" + "/stories" + "/city/:cityName", function(requ
 
 			// Read the file content - it's a JSON string and it needs to be parsed
 			let dbContentObj = JSON.parse(data);
-
+      let dbContentCity = [];
 			// Return the response to the client
       // doesn t populate and todo : send more objects
 			for (let i=0; i < dbContentObj.documents.length ;i++) {
 				if (dbContentObj.documents[i].data.city == findCityName) {
+					console.log(i)
 					// Stop the loop and simply return the document
-					response.setHeader("Content-Type", "application/json");
-					response.end(JSON.stringify(dbContentObj.documents[i]));
-					return;
+					dbContentCity.push(dbContentObj.documents[i]);
 				}
+			}
+
+			if (dbContentCity.length != 0) {
+				response.setHeader("Content-Type", "application/json");
+				response.end(JSON.stringify(dbContentCity));
+				console.log(dbContentCity)
+				return;
 			}
 
 			// The document was not found, return a 404 HTTP Error
