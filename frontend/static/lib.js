@@ -157,7 +157,13 @@ function populateVisitorsTable(documents) {
 	console.log(documents);
 
 	let itemsTable = document.getElementById('visitorsList');
+	let tableHeaderRowCount = 1;
 
+	let rowCount = itemsTable.rows.length;
+	for (let i = tableHeaderRowCount; i < rowCount; i++) {
+	    itemsTable.deleteRow(tableHeaderRowCount);
+	}
+	
 	for (let i=0; i < documents.length ;i++) {
 
 		let newRow = itemsTable.insertRow(i+1);
@@ -175,6 +181,12 @@ function populateStoriesTable(documents) {
 	console.log(documents);
 
 	let itemsTable = document.getElementById('storyList');
+	let tableHeaderRowCount = 1;
+
+	let rowCount = itemsTable.rows.length;
+	for (let i = tableHeaderRowCount; i < rowCount; i++) {
+	    itemsTable.deleteRow(tableHeaderRowCount);
+	}
 
 	for (let i=0; i < documents.length; i++) {
 		let newRow = itemsTable.insertRow(i+1);

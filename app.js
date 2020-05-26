@@ -38,7 +38,6 @@ app.post(RESTAPIRoot + "/contact", function (request, response) {
 
     		// Generate a random ID for our new db entry
     		let newId = uuidv4();
-				console.log(newId);
     		// Append the new entry to the content
     		dbContentObj.documents.push({id: newId, data: request.body});
     		var dbContentJSON = JSON.stringify(dbContentObj);
@@ -139,7 +138,6 @@ app.get(RESTAPIRoot + "/contact" + "/stories" + "/city/:cityName", function(requ
       // doesn t populate and todo : send more objects
 			for (let i=0; i < dbContentObj.documents.length ;i++) {
 				if (dbContentObj.documents[i].data.city == findCityName) {
-					console.log(i)
 					// Stop the loop and simply return the document
 					dbContentCity.push(dbContentObj.documents[i]);
 				}
@@ -148,7 +146,6 @@ app.get(RESTAPIRoot + "/contact" + "/stories" + "/city/:cityName", function(requ
 			if (dbContentCity.length != 0) {
 				response.setHeader("Content-Type", "application/json");
 				response.end(JSON.stringify(dbContentCity));
-				console.log(dbContentCity)
 				return;
 			}
 
