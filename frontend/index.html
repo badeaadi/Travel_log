@@ -15,7 +15,7 @@
 
 
 	<div class="containerForm contact">
-		<form method="post" id="collectDataForm" onsubmit="return processForm(event)">
+		<form method="post" id="collectDataForm">
 
     		<label for="firstName">First Name</label>
     		<input type="text" id="firstName" name="firstName" placeholder="Your first name">
@@ -40,7 +40,9 @@
     		</select>
         <br />
 
-    		<button>Send</button>
+			<button onclick = processForm(event)>Create</button>
+			
+    		<button onclick = processFormUpdate(event)>Update</button>
   		</form>
 	</div>
 
@@ -87,6 +89,26 @@
     	</tr>
 		</table>
   </div>
+
+
+  <div class="containerForm contact">
+
+	
+	<h3> Complete here to delete your stories</h3>
+
+	<form method="delete" id="collectDataForm" onsubmit="return processFormDelete(event)">
+
+		<label for="firstName">First Name</label>
+		<input type="text" id="firstName" name="firstName" placeholder="Your first name">
+	<br />
+
+		<label for="lastName">Last Name</label>
+		<input type="text" id="lastName" name="lastName" placeholder="Your last name">
+	<br />
+
+		<button>Delete</button>
+	  </form>
+	</div>
 
 
 

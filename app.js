@@ -63,6 +63,57 @@ app.post(RESTAPIRoot + "/contact", function (request, response) {
 	});
 })
 
+
+
+
+app.put(RESTAPIRoot + "/contact", function (request, response) {
+
+	console.log("Incoming PUT contact/: ", request.body);
+
+	fs.readFile(jsonDBName, "utf8", function readFileCallback(err, data) {
+	  if (err) {
+		  // Could not open the db file
+		  console.log(err);
+	  } else {
+
+		  // Read the file content - it's a JSON string and it needs to be parsed
+		  let dbContentObj = JSON.parse(data);
+		  let idFound;
+			
+		  for (let obj in dbContentObj.documents) {
+			  	console.log(obj)
+				if (obj.data.firstName == request.body.firstName && 
+					obj.data.lastName == request.body.lastName &&
+					obj.data.city == request.body.city) {
+						
+						idFound = obj.idFound;
+						obj.data.story = request.body.story;
+						break;
+					}
+		  }
+		  var dbContentJSON = JSON.stringify(dbContentObj);
+
+		  fs.writeFile(jsonDBName, dbContentJSON, function(err) {
+			  if (err) {
+				  // Could not write to db file
+				  return console.log(err);
+			  }
+			  console.log("Successfully updated to db!");
+		  });
+
+		  // Return the response to the client
+		  response.setHeader("Content-Type", "application/json");
+
+		  let responseBody = request.body;
+		  responseBody.id = idFound;
+
+		  // The response must be JSON encoded
+			response.end(JSON.stringify(responseBody));
+	  }
+  });
+})
+
+
 // GET route: /contact (used to get the items)
 app.get(RESTAPIRoot + "/contact" + "/visitors", function(request, response) {
 
