@@ -85,7 +85,7 @@ function processFormUpdate(event) {
   		// show a simple alert
   		if (response.ok) {
   			// the status code is 200
-  			alert("Contact successfully created!");
+  			alert("Contact successfully updated!");
   		} else {
   			alert("Error: contact could not be created.");
   		}
@@ -94,6 +94,47 @@ function processFormUpdate(event) {
 	return false;
 }
 
+function processFormDelete(event) {
+
+	event.preventDefault();
+
+	// in this object we keep the data that will be sent to backend
+	let data = {};
+
+	// get values from formular
+	data['firstName'] = document.getElementById("firstNameDelete").value;
+	data['lastName'] = document.getElementById("lastNameDelete").value;
+
+	// debugging: print the collected data as object in browser's console
+	console.log(data);
+	// debugging: print the collected data as JSON string in browser's console
+	console.log(JSON.stringify(data));
+
+	let fullAPIPath = BaseAPIPath + ContactAPIPath;
+	let httpPromise = fetch(fullAPIPath, {
+    	method: 'DELETE',
+    	body: JSON.stringify(data),
+    	headers: {
+        	'Content-Type': 'application/json',
+        	'Accept': 'application/json'
+    	}
+	});
+
+    httpPromise.then(function(response) {
+    	// log the response from backend for debugging
+    	console.log(response);
+
+  		// show a simple alert
+  		if (response.ok) {
+  			// the status code is 200
+  			alert("Stories successfully deleted!");
+  		} else {
+  			alert("Error: contact could not be created.");
+  		}
+    });
+
+	return false;
+}
 
 
 function getVisitors () {
@@ -211,7 +252,7 @@ function populateVisitorsTable(documents) {
 	for (let i = tableHeaderRowCount; i < rowCount; i++) {
 	    itemsTable.deleteRow(tableHeaderRowCount);
 	}
-	
+
 	for (let i=0; i < documents.length ;i++) {
 
 		let newRow = itemsTable.insertRow(i+1);

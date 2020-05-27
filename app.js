@@ -79,15 +79,14 @@ app.put(RESTAPIRoot + "/contact", function (request, response) {
 		  // Read the file content - it's a JSON string and it needs to be parsed
 		  let dbContentObj = JSON.parse(data);
 		  let idFound;
-			
-		  for (let obj in dbContentObj.documents) {
-			  	console.log(obj)
-				if (obj.data.firstName == request.body.firstName && 
-					obj.data.lastName == request.body.lastName &&
-					obj.data.city == request.body.city) {
-						
-						idFound = obj.idFound;
-						obj.data.story = request.body.story;
+
+		  for (let i=0; i < dbContentObj.documents.length ;i++) {
+				if (dbContentObj.documents[i].data.firstName == request.body.firstName &&
+					dbContentObj.documents[i].data.lastName == request.body.lastName &&
+					dbContentObj.documents[i].data.city == request.body.city) {
+
+						idFound = dbContentObj.documents[i].id;
+						dbContentObj.documents[i].data.story = request.body.story;
 						break;
 					}
 		  }
@@ -109,6 +108,40 @@ app.put(RESTAPIRoot + "/contact", function (request, response) {
 
 		  // The response must be JSON encoded
 			response.end(JSON.stringify(responseBody));
+	  }
+  });
+})
+
+
+app.delete(RESTAPIRoot + "/contact", function (request, response) {
+
+	console.log("Incoming DELETE contact/: ", request.body);
+
+	fs.readFile(jsonDBName, "utf8", function readFileCallback(err, data) {
+	  if (err) {
+		  // Could not open the db file
+		  console.log(err);
+	  } else {
+		  // Read the file content - it's a JSON string and it needs to be parsed
+		  let dbContentObj = JSON.parse(data);
+
+			dbContentObj.documents = dbContentObj.documents.filter(document => document.data.firstName != request.body.firstNam
+				  && document.data.lastName != request.body.lastName)
+		  var dbContentJSON = JSON.stringify(dbContentObj);
+
+		  fs.writeFile(jsonDBName, dbContentJSON, function(err) {
+			  if (err) {
+				  // Could not write to db file
+				  return console.log(err);
+			  }
+			  console.log("Successfully deleted from db!");
+		  });
+
+		  // Return the response to the client
+		  response.setHeader("Content-Type", "application/json");
+
+		  // The response must be JSON encoded
+			response.end(JSON.stringify(dbContentObj.documents));
 	  }
   });
 })

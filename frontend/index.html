@@ -31,17 +31,17 @@
 
     		<label for="city">City</label>
     		<select id="city" name="city">
-      			<option value="bucharest">Bucharest</option>
-      			<option value="cluj">Cluj</option>
-      			<option value="timisoara">Timisoara</option>
-      			<option value="brasov">Brasov</option>
-      			<option value="constanta">Constanta</option>
-      			<option value="valcea">Ramnicu Valcea</option>
+      			<option value="Bucharest">Bucharest</option>
+      			<option value="Cluj">Cluj</option>
+      			<option value="Timisoara">Timisoara</option>
+      			<option value="Brasov">Brasov</option>
+      			<option value="Constanta">Constanta</option>
+      			<option value="Valcea">Ramnicu Valcea</option>
     		</select>
         <br />
 
 			<button onclick = processForm(event)>Create</button>
-			
+
     		<button onclick = processFormUpdate(event)>Update</button>
   		</form>
 	</div>
@@ -55,12 +55,12 @@
 	<div class="selector">
 		<label for="city">Get stories from cities</label>
 			<select class = "form" id="get_city" name="city" onchange="getStoriesByCity()">
-				<option value="bucharest">Bucharest</option>
-				<option value="cluj">Cluj</option>
-				<option value="timisoara">Timisoara</option>
-				<option value="brasov">Brasov</option>
-				<option value="constanta">Constanta</option>
-				<option value="valcea">Ramnicu Valcea</option>
+				<option value="Bucharest">Bucharest</option>
+				<option value="Cluj">Cluj</option>
+				<option value="Timisoara">Timisoara</option>
+				<option value="Brasov">Brasov</option>
+				<option value="Constanta">Constanta</option>
+				<option value="Valcea">Ramnicu Valcea</option>
 			</select>
 		</div>
 
@@ -93,17 +93,17 @@
 
   <div class="containerForm contact">
 
-	
+
 	<h3> Complete here to delete your stories</h3>
 
 	<form method="delete" id="collectDataForm" onsubmit="return processFormDelete(event)">
 
 		<label for="firstName">First Name</label>
-		<input type="text" id="firstName" name="firstName" placeholder="Your first name">
+		<input type="text" id="firstNameDelete" name="firstName" placeholder="Your first name">
 	<br />
 
 		<label for="lastName">Last Name</label>
-		<input type="text" id="lastName" name="lastName" placeholder="Your last name">
+		<input type="text" id="lastNameDelete" name="lastName" placeholder="Your last name">
 	<br />
 
 		<button>Delete</button>
